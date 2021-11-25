@@ -6,34 +6,48 @@
 using namespace std;
 
 /*
-*\brief Вычисляет значение функции
+*\brief Находит значение функции
 *\param x Значение x
-*\param c Значение c=0.29
-*\param k Значение k=1.2502
+*\param a Значение a=0.29
+*\param b Значение b=1.2502
 *\return Значение y
 */
-double GetFunction(double x, double const c, double const k);
+double GetY(double x, double const a, double const b);
 
 int main()
 {
-    double const c=0.29, k= 1.2502;
+	// объявление и инициализация констант a, b
+    double const a=0.29, b= 1.2502;
+	// объявление переменных x, left, right, step типа double
     double x, left, right, step;
+	// вывод вспомогательной строки в консоль
     cout << "Enter left limit of interval" << endl;
+	// присвоить left значение, введенного с консоли
     cin >> left;
+	// вывод вспомогательной строки в консоль
     cout << "Enter right limit of interval" << endl;
+	// присвоить right значение, введенного с консоли
     cin >> right;
+	// вывод вспомогательной строки в консоль
     cout << "Enter value of step " << endl;
+	// присвоить step значение, введенного с консоли
     cin >> step;
 
+	// присвоить x значение left
     x = left;
+	// цикл, пока x <= right, выполняется:
     while (x <= right)
     {
-        cout << setprecision(5) << GetFunction(x,c,k) << endl;
+		// вывод значения функции GetY(x,a,b), setprecision(...) - задает точность значений с плавающей запятой
+        cout << setprecision(5) << GetY(x,a,b) << endl;
+		// прибавление к x значение step
         x += step;
     }
 }
 
-double GetFunction(double x, double const c, double const k)
+// функция, которая принимает в качестве трех аргументов значения типа double и возвращает значение типа double.
+double GetY(double x, double const a, double const b)
 {
-    return c * pow(x, 3) + x - k;
+	// pow(...) - возведение числа в степень
+    return a * pow(x, 3) + x - b;
 }
