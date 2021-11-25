@@ -48,7 +48,7 @@ double GetFoundA(const double x, const double y)
 	return pow(x, y / x) - pow(y / x, 1 / 3);
 }
 
-// функция, которая принимает в качестве двух аргументов значения типа double и возвращает значение типа double.
+//  функция, которая принимает в качестве двух аргументов значения типа double и возвращает значение типа double.
 double GetFoundB(const double x, const double y, const double z)
 {
 	return (y - x) + ((y - z) / (y - x)) / (3 + ((z * z) / 5));
