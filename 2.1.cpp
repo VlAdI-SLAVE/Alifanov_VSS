@@ -26,6 +26,10 @@ double GetArea(double CatheterOne, double CatheterTwo);
  */
 enum class Choice { perimeter, area };
 
+/**
+* \brief Точка входа в программу
+* \return Код ошибки (0) успех
+*/
 int main()
 {
 	// объявление переменных CatheterOne, CatheterTwo типа double
