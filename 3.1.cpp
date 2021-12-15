@@ -13,6 +13,10 @@ using namespace std;
 */
 double GetY(double x, double const a, double const b);
 
+/**
+* \brief Точка входа в программу
+* \return Код ошибки (0) успех
+*/
 int main()
 {
     double const a=0.29, b= 1.2502;
