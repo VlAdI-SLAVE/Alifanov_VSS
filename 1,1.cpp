@@ -21,6 +21,10 @@ double GetA(const double x, const double y);
 */
 double GetB(const double x, const double y, const double z);
 
+/**
+* \brief Точка входа в программу
+* \return Код ошибки (0) успех
+*/
 int main()
 {    
 	// объявление и инициализация констант x, y, z.
