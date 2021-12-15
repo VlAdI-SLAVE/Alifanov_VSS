@@ -20,6 +20,10 @@ double GetF1(const double x, const double a);
  */
 double GetF2(const double x, const double a);
 
+/**
+* \brief Точка входа в программу
+* \return Код ошибки (0) успех
+*/
 int main()
 {
     const double a = 2;
