@@ -24,6 +24,10 @@ double GetSurfaceArea(double edge);
 */
 double GetVolume(double edge);
 
+/**
+* \brief Точка входа в программу
+* \return Код ошибки (0) успех
+*/
 int main()
 {
 	// объявление переменной edge типа double.
