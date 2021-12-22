@@ -1,84 +1,73 @@
-#define USE_MATH_DEFINES
 #include <iostream>
-#include <iomanip>
 #include <cmath>
 
 using namespace std;
 
 /*
-*\brief Расчёт рекурентного выражения
-*\param k Индекс члена ряда
-*\return Значение рекурентного соотношения
+*\brief Расчёт рекурентного выражения.
+*\param k Индекс члена ряда.
+*\return Значение рекурентного соотношения.
 */
 double Recurrent(const size_t k);
 
 /*
-*\brief Расчёт суммы ряда
-*\param n Колличество членов ряда
-*\return Значение суммы
+*\brief Расчёт суммы ряда.
+*\param n Колличество членов ряда.
+*\return Значение суммы.
 */
 double Sum(const size_t n);
 
 /*
-*\brief Расчёт суммы ряда со значением большим е
-*\param e Значение е
-*\return Значение суммы
+*\brief Расчёт суммы ряда со значением большим е.
+*\param e Погрешность вычисления.
+*\return Значение суммы.
 */
 double SumE(const double e);
 
+/*
+*\brief Точка входа в программу.
+*\return 0 в случае успеха.
+*/
 int main()
 {
-	// вывод вспомогательной строки в консоль
 	cout << "Enter number of elements in sequence." << endl;
-	// объявление n базового беззнакового целочисленного типа, применяемый как правило для счетчиков циклов и т.д.
-	size_t n;
-	// присваивание n значение, введеного с консоли
+	size_t n = 0;
 	cin >> n;
-	// вывод значения функции Sum(n), "\n" - тоже самое, что endl - перевод на новую строку
-	cout << Sum(n) << "\n";
-	// вывод вспомогательной строки в консоль
+
+	cout << "Sum of elements = " << Sum(n) << "\n";
+
 	cout <<  "Enter e = ";
-	
-	// объявление константы e типа double
 	double e;
-	// присваивание e значение, введенного с консоли
 	cin >> e;
-	// вывод значения функции SumE(e)
-	cout << SumE(e);
+	cout << "Sum of elements less than e = " <<SumE(e);
 	return 0;
 }
 
-// функция, которая принимает в качестве аргумента значение типа size_t и возвращает значение типа double.
 double Recurrent(const size_t k)
 {
-	return (-1.0) / ((k + 1) * (k + 2));
+	return pow((-1.0),k) / ((k + 1.0) * (k + 2.0));
 }
-// функция, которая принимает в качестве аргумента значение типа size_t и возвращает значение типа double.
+
 double Sum(const size_t n)
 {
-	// объявление и инициализация переменных pre, sum, cur типа double
-	double pre = 1, sum = 1, cur;
-	// цикл for
+	double sum = 1.0;
 	for (size_t k = 0; k < n; k++)
 	{
-		cur = Recurrent(k) * pre;
-		pre = cur;
-		sum += pre;
+		sum += Recurrent(k);
+		k++;
 	}
 	return sum;
 }
 
-// функция, которая принимает в качестве аргумента значение типа double и возвращает значение типа double.
 double SumE(const double e)
 {
-	// объявление и инициализация переменных pre, sum, cur типа double
-	double pre = 1, sum = 1, cur;
-	// цикл for, abs(...) - модуль числа
-	for (size_t k = 0; abs(pre) > e; k++)
-	{
-		cur = Recurrent(k) * pre;
-		pre = cur;
-		sum += pre;
-	}
-	return sum;
+    size_t k = 0;
+	double current, sum;
+    current = Recurrent(k);
+    while (current > e){
+        sum = sum + current;
+        k++;
+        current = Recurrent(k);
+    }
+    return sum;
 }
