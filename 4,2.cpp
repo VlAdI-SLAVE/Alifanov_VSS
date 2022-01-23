@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
+#include <ctime>
 #include <random>
-
 using namespace std;
 
 /**
@@ -11,12 +11,12 @@ using namespace std;
 size_t GetSize();
 
 /**
- * \brief Замена элементов массива с нечетными номерами на квадраты их номеров.
- * \param myArray массив.
- * \param size размер массива.
- * \return массив.
- */
-int* ChangeElements( int* myArray, const size_t size);
+ *\brief Вычисление нового размера массива.
+ *\param size размер массива.
+ *\param k переменная вводимая пользователем.
+ *\return Размер нового массива.
+*/
+size_t NewSize(const int* myArray, size_t size, const int k);
 
 /**
  * \brief Заполнение массива случайными числами.
@@ -35,20 +35,29 @@ int* FillRandomArray(size_t size, int minValue, int maxValue);
 void ArrayPrint(const int* myArray, size_t size);
 
 /**
- * \brief Функция определяет, есть ли положительные элементы, делящиеся на заданное число k с остатком 2.
+ * \brief Добавление элементoв со значением К до и после всех элементов, заканчивающихся на цифру К.
  * \param myArray массив.
  * \param size размер массива.
- * \return true, если имеются, false если нет.
+ * \return изменённый массив.
  */
-bool PositiveEvenElements(const int* myArray, const size_t size);
+int* Add(int* myArray, size_t size);
 
 /**
- * \brief Вычисление произведения четных элементов массива.
+ * \brief Создание нового массива по заданным формулам.
  * \param myArray массив.
  * \param size размер массива.
- * \return Произведение.
+ * \param k переменная вводимая пользователем.
+ * \return изменённый массив.
  */
-int CompositionOfEvenElements(int* myArray, const size_t size);
+int* ArrayChange(int* myArray, size_t size, const int k );
+
+/**
+ * \brief Замена предпоследнего элемента массива на максимальный по модулю.
+ * \param myArray массив.
+ * \param size размер массива.
+ * \param maxValue максимальное значение, которое может принимать элемент массива.
+ */
+int* LastToMaxChange(const size_t size, const int minValue);
 
 /**
  * \brief Метод, возвращающий заполненный пользователем массив.
@@ -113,21 +122,30 @@ int main()
     }
     }
 
+    cout << "Массив с заменённым минимальным элементом: " << endl;
+
+    myArray = LastToMaxChange(size, minValue);
     ArrayPrint(myArray, size);
 
-    cout << "Произведение чётных элементов массива: " << CompositionOfEvenElements(myArray, size)<<endl;
+    cout << "Введите К";
+    int k = 0;
+    cin >> k;
 
-    cout << "Массив с заменёнными элементами: ";
-    myArray = ChangeElements(myArray, size);
-    ArrayPrint(myArray, size);
+    int* newArray2 = new int[NewSize(myArray, size,k)];
+    cout << "Массив с добавленными к" << endl;
+    newArray2 = AddK(myArray, size, k);
+    ArrayPrint(newArray2, size);
 
-    if (PositiveEvenElements(myArray, size)) {
-        cout << "Есть положительные элементы, делящиеся на заданное число k с остатком 2.";
+    if (newArray2 != nullptr) {
+
+        delete[] newArray2;
+        newArray2 = nullptr;
+
     }
-    else {
-        cout << "Нет положительных элементов, делящихся на заданное число k с остатком 2";
-    }
-    cout << endl;
+
+    cout << "Заменённый массив по формулам" << endl;
+    newArray2 = ArrayChange(myArray, size);
+    ArrayPrint(newArray2, size);
 
     if (myArray != nullptr) {
 
@@ -152,40 +170,87 @@ size_t GetSize() {
         return size;
 };
 
-int* ChangeElements( int* myArray, const size_t size) {
-    for (size_t index = 0; index < size; index+=2) {
-        myArray[index] = index * index;
-    }
-    return myArray;
-}
-
-bool PositiveEvenElements(const int* myArray, const size_t size) {
-    int k = 0;
-    int countelements = 0;
-    cout << "Введите k "<< endl;
-    cin >> k;
-    if (k < 3) {
-        cout << "k < 3: Остаток от деления не может быть равен 2. Введите k > 3 "<< endl;
-        return false;
-    }
-
-    for (size_t index = 1; index < size; index = index + 2) {
-        if (myArray[index] > 0 && myArray[index] % k == 2) {
-            countelements++;
+size_t NewSize(const int* myArray, size_t size, const int k) {
+    size_t count = 0;
+    for (size_t index = 0; index < size; index++) {
+        if (myArray[index] % 10 == k) {
+            count += 2;
         }
     }
-    return countelements > 0;
-
+    size = size + count;
+    return size;
 }
 
-int CompositionOfEvenElements(int* myArray, const size_t size)
+int* LastToMaxChange(const size_t size, const int minValue)
 {
-    int comp = 1;
+    auto maxArrayValue = minValue;
+    size_t maxElementIndex = 0;
+
+    int* newArray = new int[size];
     for (size_t index = 0; index < size; index++) {
-        if (myArray[index] % 2 == 0)
-            comp = comp * myArray[index];
+        if (abs(newArray[index]) > maxArrayValue) {
+            maxArrayValue = abs(newArray[index]);
+            maxElementIndex = index;
+        }
     }
-    return comp;
+
+    newArray[size - 2] = newArray[maxElementIndex];
+
+    return newArray;
+}
+
+int* ArrayChange(int* myArray, size_t size)
+{
+    int temprary = 0;
+    if (myArray == nullptr) {
+        cout << "Массив пуст";
+        return nullptr;
+    }
+
+    int* newArray = new int[size];
+    for (size_t index = 0, newindex = 0; index < size; index++) {
+        if (index % 2 == 0) {
+            newArray[newindex] = myArray[index]* myArray[index] * index;
+        }
+        if(index % 2!=0 and index != 1 ) {
+            newArray[newindex] = myArray[index] / (index - 1);
+        }
+    }
+
+    return newArray;
+}
+
+int* AddK(int* myArray, size_t size, const int k)
+{
+    if (myArray == nullptr) {
+        cout << "Массив пуст";
+        return nullptr;
+    }
+
+    size_t count = 0;
+    for (size_t index = 0; index < size; index++) {
+        if (myArray[index] % 10 == k ) {
+            count += 2; 
+        }
+    }
+
+    int* newArray = new int[size + count];
+
+    if (myArray[index + 1] % 10 == k || index >= 1 && myArray[index - 1] == k) {
+        if (myArray[index + 1] % 10 == k) {
+            newArray[newindex] = k;
+            newindex++;
+        }
+        if (index >= 1 && myArray[index - 1] % 10 == k) {
+            newArray[newindex] = k;
+        }
+
+    }
+    else {
+        newArray[newindex] = myArray[index];
+    }
+
+    return newArray;
 }
 
 void ArrayPrint(const int* myArray, const size_t size)
@@ -195,7 +260,7 @@ void ArrayPrint(const int* myArray, const size_t size)
         cout << "Массива не существует";
     }
     else {
-        cout << "\nМассив:\n";
+        cout << "Массив:\n";
         for (size_t index = 0; index < size; index++) {
             cout << myArray[index] << " ";
         }
