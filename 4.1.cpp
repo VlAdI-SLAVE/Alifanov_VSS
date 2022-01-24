@@ -16,7 +16,7 @@ size_t GetSize();
  * \param size размер массива.
  * \return массив.
  */
-int* ChangeElements( int* myArray, const size_t size);
+void ChangeElements(int* myArray, const size_t size);
 
 /**
  * \brief Заполнение массива случайными числами.
@@ -115,11 +115,10 @@ int main()
 
     ArrayPrint(myArray, size);
 
-    cout << "Произведение чётных элементов массива: " << CompositionOfEvenElements(myArray, size)<<endl;
+    cout << "Произведение чётных элементов массива: " << CompositionOfEvenElements(myArray, size) << endl;
 
     cout << "Массив с заменёнными элементами: ";
-    myArray = ChangeElements(myArray, size);
-    ArrayPrint(myArray, size);
+    ChangeElements(myArray, size);
 
     if (PositiveEvenElements(myArray, size)) {
         cout << "Есть положительные элементы, делящиеся на заданное число k с остатком 2.";
@@ -152,20 +151,20 @@ size_t GetSize() {
         return size;
 };
 
-int* ChangeElements( int* myArray, const size_t size) {
-    for (size_t index = 0; index < size; index+=2) {
+void ChangeElements(int* myArray, const size_t size) {
+    for (size_t index = 0; index < size; index += 2) {
         myArray[index] = index * index;
     }
-    return myArray;
+    ArrayPrint(myArray, size)
 }
 
 bool PositiveEvenElements(const int* myArray, const size_t size) {
     int k = 0;
     int countelements = 0;
-    cout << "Введите k "<< endl;
+    cout << "Введите k " << endl;
     cin >> k;
     if (k < 3) {
-        cout << "k < 3: Остаток от деления не может быть равен 2. Введите k > 3 "<< endl;
+        cout << "k < 3: Остаток от деления не может быть равен 2. Введите k > 3 " << endl;
         return false;
     }
 
