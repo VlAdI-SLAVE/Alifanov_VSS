@@ -1,40 +1,37 @@
-#define _USE_MATH_DEFINES 
 #include <iostream>
-#include <iomanip>
-#include <cmath>
 
 using namespace std;
 
 /**
  * \brief Расчет периметра прямоугольного треугольника.
- * \param CatheterOne Длина первого катета.
- * \param CatheterTwo Длина второго катета.
+ * \param firstCatheterLength Длина первого катета.
+ * \param secondCatheterLength Длина второго катета.
  * \return Периметр прямоугольного треугольника.
  */
-double GetPerimeter(double CatheterOne, double CatheterTwo);
+double GetPerimeter(double firstCatheterLength, double secondCatheterLength);
 
 /**
  * \brief Расчет площади прямоугольного треугольника.
- * \param CatheterOne Длина первого катета.
- * \param CatheterTwo Длина второго катета.
+ * \param firstCatheterLength Длина первого катета.
+ * \param secondCatheterLength Длина второго катета.
  * \return Площадь прямоугольного треугольника.
  */
-double GetArea(double CatheterOne, double CatheterTwo);
+double GetArea(double firstCatheterLength, double secondCatheterLength);
 
 /**
  * \brief Пользовательский выбор расчета  периметра или площади.
  */
 enum class Choice {
     /**
-     *brief Периметр. 
+     *brief Периметр.
     */
     perimeter,
-    
+
     /**
-     * \brief Площадь. 
+     * \brief Площадь.
     */
-    area 
-    
+    area
+
 };
 
 /**
@@ -43,44 +40,44 @@ enum class Choice {
 */
 int main()
 {
-	double CatheterOne, CatheterTwo;
-	cout << "Length of the first catheter: "; 
-	cin >> CatheterOne;
-	cout << "Length of the second catheter: ";
-	cin >> CatheterTwo;
+    double firstCatheterLength, secondCatheterLength;
+    cout << "Length of the first catheter: ";
+    cin >> firstCatheterLength;
+    cout << "Length of the second catheter: ";
+    cin >> secondCatheterLength;
 
-	cout << "Enter an action on the triangle (perimeter = 0, area = 1) ";
+    cout << "Enter an action on the triangle (perimeter = 0, area = 1) ";
 
-	int input;
-	cin >> input;
+    int input;
+    cin >> input;
 
-	const auto choice = static_cast<Choice>(input);
+    const auto choice = static_cast<Choice>(input);
 
-	switch (choice)
-	{
-		case Choice::perimeter:
-        {
-           const double Perimeter = GetPerimeter(CatheterOne, CatheterTwo);
-           cout << "Triangle perimeter = " << Perimeter;
-           break;
-        }
-        case Choice::area:
-        {
-           const double Area = GetArea(CatheterOne, CatheterTwo);
-           cout << "Area of the triangle = " << Area;
-           break;
-        }
-	}
-	return 0;
+    switch (choice)
+    {
+    case Choice::perimeter:
+    {
+        const double perimeter = GetPerimeter(firstCatheterLength, secondCatheterLength);
+        cout << "Triangle perimeter = " << perimeter;
+        break;
+    }
+    case Choice::area:
+    {
+        const double area = GetArea(firstCatheterLength, secondCatheterLength);
+        cout << "Area of the triangle = " << area;
+        break;
+    }
+    }
+    return 0;
 }
 
-double GetPerimeter(double CatheterOne, double CatheterTwo)
+double GetPerimeter(double firstCatheterLength, double secondCatheterLength)
 {
-	return CatheterOne + CatheterTwo + sqrt(CatheterOne * CatheterOne + CatheterTwo * CatheterTwo);
+    return firstCatheterLength + secondCatheterLength + sqrt(firstCatheterLength * firstCatheterLength + secondCatheterLength * secondCatheterLength);
 }
 
-double GetArea(double CatheterOne, double CatheterTwo)
+double GetArea(double firstCatheterLength, double secondCatheterLength)
 {
-        const double a = 2.0;
-	return CatheterOne * CatheterTwo / a;
+    const double a = 2.0;
+    return firstCatheterLength * secondCatheterLength / a;
 }
