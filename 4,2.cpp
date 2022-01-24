@@ -49,7 +49,7 @@ int* Add(int* myArray, size_t size);
  * \param k переменная вводимая пользователем.
  * \return изменённый массив.
  */
-int* ArrayChange(int* myArray, size_t size, const int k );
+int* ArrayChange(int* myArray, size_t size, const int k);
 
 /**
  * \brief Замена предпоследнего элемента массива на максимальный по модулю.
@@ -131,7 +131,7 @@ int main()
     int k = 0;
     cin >> k;
 
-    int* newArray2 = new int[NewSize(myArray, size,k)];
+    int* newArray2 = new int[NewSize(myArray, size, k)];
     cout << "Массив с добавленными к" << endl;
     newArray2 = AddK(myArray, size, k);
     ArrayPrint(newArray2, size);
@@ -210,9 +210,9 @@ int* ArrayChange(int* myArray, size_t size)
     int* newArray = new int[size];
     for (size_t index = 0, newindex = 0; index < size; index++) {
         if (index % 2 == 0) {
-            newArray[newindex] = myArray[index]* myArray[index] * index;
+            newArray[newindex] = myArray[index] * myArray[index] * index;
         }
-        if(index % 2!=0 and index != 1 ) {
+        if (index % 2 != 0 and index != 1) {
             newArray[newindex] = myArray[index] / (index - 1);
         }
     }
@@ -229,27 +229,28 @@ int* AddK(int* myArray, size_t size, const int k)
 
     size_t count = 0;
     for (size_t index = 0; index < size; index++) {
-        if (myArray[index] % 10 == k ) {
-            count += 2; 
+        if (myArray[index] % 10 == k) {
+            count += 2;
         }
     }
 
     int* newArray = new int[size + count];
 
-    if (myArray[index + 1] % 10 == k || index >= 1 && myArray[index - 1] == k) {
-        if (myArray[index + 1] % 10 == k) {
-            newArray[newindex] = k;
-            newindex++;
-        }
-        if (index >= 1 && myArray[index - 1] % 10 == k) {
-            newArray[newindex] = k;
-        }
+    for (size_t index = 0; index < size; index++) {
+        if (myArray[index + 1] % 10 == k || index >= 1 && myArray[index - 1] == k) {
+            if (myArray[index + 1] % 10 == k) {
+                newArray[newindex] = k;
+                newindex++;
+            }
+            if (index >= 1 && myArray[index - 1] % 10 == k) {
+                newArray[newindex] = k;
+            }
 
+        }
+        else {
+            newArray[newindex] = myArray[index];
+        }
     }
-    else {
-        newArray[newindex] = myArray[index];
-    }
-
     return newArray;
 }
 
